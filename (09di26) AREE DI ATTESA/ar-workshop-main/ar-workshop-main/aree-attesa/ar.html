@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>Aree di Attesa - Legnago</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" type="text/css" href="ar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="relative flex flex-col overflow-y-hidden h-screen">
+
+    <div class="loader flex justify-center items-center absolute bg-white w-full h-full z-30">
+      <svg class="animate-spin h-8 w-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+        </path>
+      </svg>
+    </div>
+
+    <div class="flex items-center w-full bg-gray-50 text-gray-700 z-40 px-3">
+      <div class="flex-1 h-full inline-flex items-center">
+        <a href="index.html" class="p-3"><i class="fas fa-arrow-left"></i></a>
+      </div>
+      <h1 class="flex-1 h-full text-center font-medium inline-flex items-center justify-center">Aree di attesa</h1>
+      <div class="debug flex-1 flex justify-end">
+        <!--<button id="simulate" class="p-3">
+            <i class="fas fa-location-arrow"></i>
+          </button>
+          <button id="simulate-near" class="p-3">
+            <i class="fas fa-map-marker-alt"></i>
+          </button>-->
+      </div>
+    </div>
+
+    <div class="relative flex-1 h-full">
+      <canvas id="canvas" class="confetti absolute z-10"></canvas>
+      <iframe src="camera.html" class="absolute w-screen h-screen" allow="camera *" /></iframe>
+    </div>
+
+    <div
+      class="hidden footer flex gap-4 justify-between fixed bottom-0 w-full border-t rounded-t-xl px-6 py-4 bg-white cursor-pointer z-50 hover:bg-gray-50">
+      <div class="footer-container flex-1 w-4">
+        <div class="footer-place-distance font-medium text-xl"></div>
+        <div class="footer-place-title text-sm text-gray-600 truncate"></div>
+      </div>
+      <div class="footer-button inline-flex items-center">
+        <i class="fas fa-info-circle text-xl"></i>
+      </div>
+    </div>
+
+    <div
+      class="detail-panel flex flex-col justify-between bg-white leading-relaxed h-full transform translate-y-full z-20">
+      <div class="flex-1 px-6 py-10">
+        <div class="detail-title text-2xl font-bold mb-2"></div>
+        <div class="detail-more flex justify-between text-gray-700 font-medium mb-6">
+          <span class="detail-address"></span>
+          <span class="detail-distance text-blue-600 font-medium"></span>
+        </div>
+        <div class="hidden more-details bg-emerald-50 text-emerald-700 rounded-lg px-6 py-4 mb-4"></div>
+        <hr class="my-6 border-gray-300" />
+        <div class="detail-description text-gray-500"></div>
+      </div>
+      <!--<button class="close-panel-btn flex-shrink-0 bg-gray-50 text-gray-600 py-6">Chiudi</button>-->
+    </div>
+
+  </div>
+  <script>
+    window.onload = () => {
+      var iframe = document.querySelector('iframe');
+      var isOpen = false;
+
+      document.querySelector('.footer').addEventListener('click', function () {
+        if (!isOpen) {
+          isOpen = true;
+          iframe.contentWindow.openPanel();
+        }
+        else {
+          isOpen = false;
+          iframe.contentWindow.closePanel();
+        }
+      });
+      /*document.querySelector('.close-panel-btn').addEventListener('click', function() {
+          iframe.contentWindow.closePanel();
+      });*/
+    };
+  </script>
+  <script src="confetti.js"></script>
+</body>
+
+</html>
