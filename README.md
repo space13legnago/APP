@@ -37,3 +37,5 @@ E’ una Web App Responsive che fornisce informazioni su piste da sci e scuole d
 La Web App (anche in questo caso interamente sviluppata con codice nei linguaggi HTML e PHP) consente, fin dalla pagina iniziale, di scegliere tra PISTE e SCUOLE.
 
 L’app è visualizzabile al link: <https://skimap.giuliopime.dev>
+
+Codice dell'applicazione: <https://github.com/Space-13-Team-Undefined/SkiMap>
