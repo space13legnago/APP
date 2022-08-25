@@ -1,0 +1,114 @@
+<style>
+    /*container per centrare la mappa*/
+    #container{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #map{
+        height: 80vh ;
+        width: 80vw;
+        background-color: red;
+    }
+    html,body{
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+</head>
+<body>
+<div id="container">
+    <div id="map"></div>
+</div>
+<script>
+    function initMap()
+    {
+        let mapOptions=
+            {
+                center: new google.maps.LatLng('45.183484','11.2600674'),
+                zoom:12,
+                mapTypeId:'terrain',
+            }
+
+
+        let map=new google.maps.Map(document.getElementById('map'),mapOptions);
+
+
+
+        let infowindow = new google.maps.InfoWindow();
+
+
+
+
+
+        //  $.getJSON(json, function(json1) {
+        var json1 = {
+            "autisti": [{
+
+                "nome": "Alberto Magri",
+                "indirizzo": "via Fallaci 32 - Isola Rizza",
+                "telefono": "335 669 78 896",
+                "email":"giorgiorossi@gmail.com",
+                "lat": "45.29167203937774",
+                "lng": "11.194939983346702"
+            },
+                {
+                    "nome": "Jacopo Sordi",
+                    "indirizzo": "via Palesella 22 - Legnago",
+                    "telefono": "335 669 78 896",
+                    "email":"LucaBianchi@gmail.com",
+                    "lat": "45.214328",
+                    "lng": "11.237622"
+                },
+                {
+                    "nome": "laura Bianchi",
+                    "indirizzo": "via XXV Aprile - Cerea",
+                    "telefono": "335 669 78 896",
+                    "email":"LucaBianchi@gmail.com",
+                    "lat": "45.191623",
+                    "lng": "11.212887"
+                },
+
+            ]
+        };
+        $.each(json1.autisti, function(key, data) {
+
+            var latLng = new google.maps.LatLng(data.lat, data.lng);
+
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                icon: 'img/pollice.jpg',
+                title: data.nome
+            });
+
+            var details = data.nome + ", " +data.indirizzo + ", " + data.telefono + "<br><a href=\"https://api.whatsapp.com/send/?phone=+39"+data.telefono+"&text=I%27m+api+msg+hello++friend+ertertertee&app_absent=0\">CIAO! POSSO OFFRIRTI UN PASSAGGIO!<\a>";
+
+            bindInfoWindow(marker, map, infowindow, details);
+
+            //    });
+
+        });
+
+    }
+
+    function bindInfoWindow(marker, map, infowindow, strDescription) {
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(strDescription);
+            infowindow.open(map, marker);
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBq7W-Ak9YtxxqzAJknJ3cyZkti4xZ70sI&callback=initMap&v=weekly" defer></script>
+</script>
+</body>
+</html>
