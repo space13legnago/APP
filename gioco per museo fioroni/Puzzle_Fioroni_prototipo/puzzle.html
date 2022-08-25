@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html data-theme="autumn">
+<head>
+    <script src="puzzle.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.13.6/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+    <title> Puzzle - Sample </title>
+</head>
+<body onload="main()" class="grid place-items-center bg-primary" style="margin:0">
+
+    <div id="summary" class="hero min-h-screen" style="background-image: url(imgs/sample.jpg); display:none;">
+        <div class="hero-overlay bg-opacity-60"></div>
+        <div class="hero-content text-center text-neutral-content">
+            <div class="max-w-md">
+                <h1 class="mb-5 text-5xl font-bold"> Hai finito il puzzle! </h1>
+                <p class="mb-5"> Hai completato Sample in <a id="displayEnd" class="text-secondary-focus"> 00:00 </a> con <a id="scoreEnd" class="text-secondary-focus"> 0 </a> tentativi </p>
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">Seleziona puzzle</button>
+                <button class="btn btn-secondary" onclick="location.reload()">Rifai puzzle</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game" class="grid w-screen h-screen grid-rows-1 grid-cols-3" style="display:grid">
+        <!-- Titolo, menu e statistiche -->
+        <div class="p-2 pl-4 w-fit place-self-center">
+            <div class="stats stats-vertical shadow">
+                <div class="stat">
+                    <div class="stat-value"> Sample </div>
+                </div>
+                <div class="stat">
+                    <label for="my-modal-5" class="btn modal-button btn-primary"> Apri menu </label>
+                </div>
+    
+                <div class="stat">
+                    <div class="stat-figure text-secondary">
+                        <div class="stat-figure text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="hsl(var(--p))" class="inline-block w-7 h-7 stroke-current m-1" viewBox="0 0 512 512"> <path d="M249.4 25.37C261.9 12.88 282.1 12.88 294.6 25.37C307.1 37.87 307.1 58.13 294.6 70.63L269.3 95.1H416C469 95.1 512 138.1 512 191.1V223.1C512 241.7 497.7 255.1 480 255.1C462.3 255.1 448 241.7 448 223.1V191.1C448 174.3 433.7 159.1 416 159.1H269.3L294.6 185.4C307.1 197.9 307.1 218.1 294.6 230.6C282.1 243.1 261.9 243.1 249.4 230.6L169.4 150.6C156.9 138.1 156.9 117.9 169.4 105.4L249.4 25.37zM342.6 361.4C355.1 373.9 355.1 394.1 342.6 406.6L262.6 486.6C250.1 499.1 229.9 499.1 217.4 486.6C204.9 474.1 204.9 453.9 217.4 441.4L242.7 416H96C78.33 416 64 430.3 64 448V480C64 497.7 49.67 512 32 512C14.33 512 0 497.7 0 480V448C0 394.1 42.98 352 96 352H242.7L217.4 326.6C204.9 314.1 204.9 293.9 217.4 281.4C229.9 268.9 250.1 268.9 262.6 281.4L342.6 361.4zM512 384C512 419.3 483.3 448 448 448C412.7 448 384 419.3 384 384C384 348.7 412.7 320 448 320C483.3 320 512 348.7 512 384zM128 128C128 163.3 99.35 192 64 192C28.65 192 0 163.3 0 128C0 92.65 28.65 64 64 64C99.35 64 128 92.65 128 128z"/></svg>
+                        </div>
+                    </div>
+                    <div class="stat-title">Movimenti fatti</div>
+                    <div class="stat-value" id="score"> 0 </div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-figure text-secondary">
+                        <div class="stat-figure text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="hsl(var(--p))" class="inline-block w-7 h-7 stroke-current m-1" viewBox="0 0 512 512"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z"/></svg>
+                        </div>
+                    </div>
+                    <div class="stat-title">Tempo trascorso:</div>
+                    <div class="stat-value"> <a id="display"> 00:00 </a> </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Area del puzzle -->
+        <div class="pr-4 col-span-2 place-self-center">
+            <div class="artboard-demo p-2">
+                <table class="max-w-full">
+                    <tr>
+                        <td id="pos0"> <img id="pos0" onclick="selectImage(this)"> </td>
+                        <td id="pos1"> <img id="pos1" onclick="selectImage(this)"> </td>
+                        <td id="pos2"> <img id="pos2" onclick="selectImage(this)"> </td>
+                    </tr>
+                    <tr>
+                        <td id="pos3"> <img id="pos3" onclick="selectImage(this)"> </td>
+                        <td id="pos4"> <img id="pos4" onclick="selectImage(this)"> </td>
+                        <td id="pos5"> <img id="pos5" onclick="selectImage(this)"> </td>
+                    </tr>
+                    <tr>
+                        <td id="pos6"> <img id="pos6" onclick="selectImage(this)"> </td>
+                        <td id="pos7"> <img id="pos7" onclick="selectImage(this)"> </td>
+                        <td id="pos8"> <img id="pos8" onclick="selectImage(this)"> </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal (Menu che permette di eseguire certe azioni) -->
+    <input type="checkbox" id="my-modal-5" class="modal-toggle">
+        <div class="modal">
+            <div class="modal-box w-fit max-w-5xl">
+                <label class="btn btn-primary" onclick="window.location.href='index.html'"> Seleziona puzzle </label>
+                <label class="btn btn-primary" onclick="location.reload()"> Rifai puzzle </label>
+                <label for="my-modal-5" class="btn btn-primary"> Ritorna al puzzle </label>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
