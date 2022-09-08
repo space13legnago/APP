@@ -1,0 +1,117 @@
+<style>
+    /*container per centrare la mappa*/
+    #container{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #map{
+        height: 80vh ;
+        width: 80vw;
+        background-color: red;
+    }
+    html,body{
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+</head>
+<body>
+<br><br><br>
+<center>
+<h2>LA TUA POSIZIONE VERRA' INSERITA A BREVE NELLA MAPPA</h2></center>
+<div id="container">
+    <div id="map"></div>
+</div>
+<script>
+    function initMap()
+    {
+        let mapOptions=
+            {
+                center: new google.maps.LatLng('45.183484','11.2600674'),
+                zoom:12,
+                mapTypeId:'terrain',
+            }
+
+
+        let map=new google.maps.Map(document.getElementById('map'),mapOptions);
+
+
+
+        let infowindow = new google.maps.InfoWindow();
+
+
+
+
+
+        //  $.getJSON(json, function(json1) {
+        var json1 = {
+            "autisti": [{
+
+                "nome": "Giorgio Rossi",
+                "indirizzo": "via C.Battisti 32 - Cerea",
+                "telefono": "3931483286",
+                "email":"giorgiorossi@gmail.com",
+                "lat": "45.1810202",
+                "lng": "11.2721632"
+            },
+                {
+                    "nome": "Luca Bianchi",
+                    "indirizzo": "via Dante 11 - Legnago",
+                    "telefono": "3931483286",
+                    "email":"LucaBianchi@gmail.com",
+                    "lat": "45.1816726",
+                    "lng": "11.281449"
+                },
+                {
+                    "nome": "aldo verdi",
+                    "indirizzo": "via tarrocco 44 - Angiari",
+                    "telefono": "3931483286",
+                    "email":"LucaBianchi@gmail.com",
+                    "lat": "45.217501",
+                    "lng": "11.275854"
+                },
+
+            ]
+        };
+        $.each(json1.autisti, function(key, data) {
+
+            var latLng = new google.maps.LatLng(data.lat, data.lng);
+
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                icon: 'img/fiat.png',
+                title: data.nome
+            });
+
+            var details = data.nome + ", " +data.indirizzo + ", " + data.telefono + "<br><a href=\"https://api.whatsapp.com/send/?phone=+39"+data.telefono+"&text=I%27m+api+msg+hello++friend+ertertertee&app_absent=0\">SCRIVIGLI!<\a>";
+
+            bindInfoWindow(marker, map, infowindow, details);
+
+            //    });
+
+        });
+
+    }
+
+    function bindInfoWindow(marker, map, infowindow, strDescription) {
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(strDescription);
+            infowindow.open(map, marker);
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBq7W-Ak9YtxxqzAJknJ3cyZkti4xZ70sI&callback=initMap&v=weekly" defer></script>
+</script>
+</body>
+</html>
